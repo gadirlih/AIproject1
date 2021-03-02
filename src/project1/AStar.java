@@ -12,8 +12,8 @@ public class AStar extends ShortestPathAlgorithm{
     @Override
     protected double heuristicCost(Node node) {
         int diff = Math.abs(node.getSquareID() - mDestinationVertexSquare);
-        int h = ((diff / 10) + 1) * 10; // find the height
-        int w = ((diff % 10) + 1) * 10; // find the width
+        int h = (diff / 10) * 10; // find the height
+        int w = (diff % 10) * 10; // find the width
         return Math.sqrt(h * h + w * w);
     }
 }
