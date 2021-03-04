@@ -3,7 +3,7 @@ package project1;
 public class Node{
     private final int mVertexID; // vertex ID
     private final int mSquareID; // vertex square ID
-    private double mBackwardCost; // backward cost | incoming edge cost
+    private double mBackwardCost; // backward cost
 
     public Node(int vertexID, int squareID, double backwardCost){
         this.mVertexID = vertexID;
