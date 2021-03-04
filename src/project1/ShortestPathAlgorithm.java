@@ -11,7 +11,7 @@ public abstract class ShortestPathAlgorithm {
     private final int mStartVertex;
     private final int mDestinationVertex;
     private final HashMap<Integer, Integer> mVertexSquare;
-    private int mVisitedNodeCount = 0;
+    private int mExpandedNodeCount = 0;
     private double mPathActualCost = 0;
     private final ArrayList<Integer> mShortestPath;
 
@@ -30,20 +30,20 @@ public abstract class ShortestPathAlgorithm {
         // start node and queue initialization
         Node startNode = new Node(mStartVertex, mVertexSquare.get(mStartVertex), 0);
         mPriorityQueue.add(startNode);
-        mShortestDistances.put(startNode.getVertexID(), totalCost(startNode));
+        mShortestDistances.put(startNode.getVertexID(), FCost(startNode));
 
         while(!mPriorityQueue.isEmpty()){
             Node currentNode = mPriorityQueue.poll();
 
             // if the current path is more than the already existing shortest path to the node than continue
-            if(totalCost(currentNode) > mShortestDistances.getOrDefault(currentNode.getVertexID(), Double.MAX_VALUE))
+            if(FCost(currentNode) > mShortestDistances.getOrDefault(currentNode.getVertexID(), Double.MAX_VALUE))
                 continue;
 
-            mVisitedNodeCount++;
+            mExpandedNodeCount++;
             // if current node == goal then exit!
             if(currentNode.getVertexID() == mDestinationVertex) {
                 prepareShortestPath();
-                mPathActualCost = currentNode.getEdgeCost();
+                mPathActualCost = currentNode.getBackwardCost();
                 break;
             }
 
@@ -52,13 +52,13 @@ public abstract class ShortestPathAlgorithm {
                 Node adjacentNode = mAdjacencyList.get(currentNode.getVertexID()).get(i);
 
                 // check if the cost of the adjacent node is shorter than the previous cost
-                if (currentNode.getEdgeCost() + totalCost(adjacentNode) < mShortestDistances.getOrDefault(adjacentNode.getVertexID(), Double.MAX_VALUE))
+                if (currentNode.getBackwardCost() + FCost(adjacentNode) < mShortestDistances.getOrDefault(adjacentNode.getVertexID(), Double.MAX_VALUE))
                 {
                     // update shortest distance to the adjacent node
-                    mShortestDistances.put(adjacentNode.getVertexID(), currentNode.getEdgeCost() + totalCost(adjacentNode));
+                    mShortestDistances.put(adjacentNode.getVertexID(), currentNode.getBackwardCost() + FCost(adjacentNode));
 
                     Node copy = adjacentNode.copy();
-                    copy.setEdgeCost(currentNode.getEdgeCost() + adjacentNode.getEdgeCost());
+                    copy.setBackwardCost(currentNode.getBackwardCost() + adjacentNode.getBackwardCost());
                     // add adjacent node to the queue
                     mPriorityQueue.add(copy);
 
@@ -87,8 +87,8 @@ public abstract class ShortestPathAlgorithm {
         System.out.println(mShortestPath.get(0));
     }
 
-    protected double totalCost(Node node){
-        return heuristicCost(node) + node.getEdgeCost();
+    protected double FCost(Node node){
+        return heuristicCost(node) + node.getBackwardCost();
     }
 
     protected abstract double heuristicCost(Node node);
@@ -96,12 +96,12 @@ public abstract class ShortestPathAlgorithm {
     class NodeComparator implements Comparator<Node> {
         @Override
         public int compare(Node o1, Node o2) {
-            return Double.compare(totalCost(o1), totalCost(o2));
+            return Double.compare(FCost(o1), FCost(o2));
         }
     }
 
     public int getVisitedNodeCount() {
-        return mVisitedNodeCount;
+        return mExpandedNodeCount;
     }
 
     public double getPathActualCost() {

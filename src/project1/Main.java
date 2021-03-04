@@ -16,20 +16,20 @@ public class Main {
         ucs.search();
         System.out.println("Uniform Cost Search: ");
         ucs.printPath();
-        System.out.println("Actual cost of the Found Shortest Path: " + ucs.getPathActualCost());
-        System.out.println("Number of nodes visited: " + ucs.getVisitedNodeCount());
+        System.out.println("Cost of the Shortest Path: " + ucs.getPathActualCost());
+        System.out.println("Number of nodes expanded: " + ucs.getVisitedNodeCount());
 
-        System.out.println("");
+        System.out.println();
 
         // AStar
         ShortestPathAlgorithm aStar = new AStar(input);
         aStar.search();
         System.out.println("AStar Search: ");
         aStar.printPath();
-        System.out.println("Actual cost of the Found Shortest Path: " + aStar.getPathActualCost());
-        System.out.println("Number of nodes visited: " + aStar.getVisitedNodeCount());
+        System.out.println("Cost of the Shortest Path: " + aStar.getPathActualCost());
+        System.out.println("Number of nodes expanded: " + aStar.getVisitedNodeCount());
 
-        System.out.println("");
+        System.out.println();
 
         // Compare results
         System.out.println("Result Comparison:");
@@ -41,13 +41,13 @@ public class Main {
         }
 
         if(ucs.getVisitedNodeCount() > aStar.getVisitedNodeCount()){
-            System.out.println("AStar visited " + (ucs.getVisitedNodeCount() - aStar.getVisitedNodeCount())
+            System.out.println("AStar expanded " + (ucs.getVisitedNodeCount() - aStar.getVisitedNodeCount())
                     +" less number of nodes to get to the destination node");
         }else if(ucs.getVisitedNodeCount() < aStar.getVisitedNodeCount()){
-            System.out.println("AStar visited " + (ucs.getVisitedNodeCount() - aStar.getVisitedNodeCount())
+            System.out.println("AStar expanded " + (ucs.getVisitedNodeCount() - aStar.getVisitedNodeCount())
                     +" more number of nodes to get to the destination node");
         }else{
-            System.out.println("Both algorithms visited the same " + ucs.getVisitedNodeCount()
+            System.out.println("Both algorithms expanded the same " + ucs.getVisitedNodeCount()
                     +" number of nodes to get to the destination node");
         }
     }

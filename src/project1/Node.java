@@ -3,12 +3,12 @@ package project1;
 public class Node{
     private final int mVertexID; // vertex ID
     private final int mSquareID; // vertex square ID
-    private double mEdgeCost = 0; // incoming edge cost
+    private double mBackwardCost; // backward cost | incoming edge cost
 
-    public Node(int vertexID, int squareID, double edgeCost){
+    public Node(int vertexID, int squareID, double backwardCost){
         this.mVertexID = vertexID;
         this.mSquareID = squareID;
-        this.mEdgeCost = edgeCost;
+        this.mBackwardCost = backwardCost;
     }
 
     public int getVertexID() {
@@ -19,15 +19,15 @@ public class Node{
         return mSquareID;
     }
 
-    public double getEdgeCost() {
-        return mEdgeCost;
+    public double getBackwardCost() {
+        return mBackwardCost;
     }
 
-    public void setEdgeCost(double edgeCost) {
-        this.mEdgeCost = edgeCost;
+    public void setBackwardCost(double backwardCost) {
+        this.mBackwardCost = backwardCost;
     }
 
     public Node copy(){
-        return new Node(mVertexID, mSquareID, mEdgeCost);
+        return new Node(mVertexID, mSquareID, mBackwardCost);
     }
 }
