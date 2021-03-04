@@ -37,13 +37,9 @@ public class InputReader {
                     int to = Integer.parseInt(args[1]);
                     double distance = Double.parseDouble(args[2])/100; // divide by 100 because input is given for 1000x1000 board
 
-                    // initialize lists if absent
-                    adjacencyList.computeIfAbsent(from, ArrayList::new);
-                    adjacencyList.computeIfAbsent(to, ArrayList::new);
-
                     // It is undirected graph so add it to both of them
-                    adjacencyList.get(from).add(new Node(to, vertexSquare.get(to), distance));
-                    adjacencyList.get(to).add(new Node(from, vertexSquare.get(from), distance));
+                    adjacencyList.computeIfAbsent(from, ArrayList::new).add(new Node(to, vertexSquare.get(to), distance));
+                    adjacencyList.computeIfAbsent(to, ArrayList::new).add(new Node(from, vertexSquare.get(from), distance));
                 }
             }
         } catch (Exception e) {
