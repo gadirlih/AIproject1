@@ -12,7 +12,7 @@ public abstract class ShortestPathAlgorithm {
     private final int mDestinationVertex;
     private final HashMap<Integer, Integer> mVertexSquare;
     private int mExpandedNodeCount = 0;
-    private double mPathActualCost = 0;
+    private double mPathCost = 0;
     private final ArrayList<Integer> mShortestPath;
 
     public ShortestPathAlgorithm(Input input){
@@ -43,7 +43,7 @@ public abstract class ShortestPathAlgorithm {
             // if current node == goal then exit!
             if(currentNode.getVertexID() == mDestinationVertex) {
                 prepareShortestPath();
-                mPathActualCost = currentNode.getBackwardCost();
+                mPathCost = currentNode.getBackwardCost();
                 break;
             }
 
@@ -105,6 +105,6 @@ public abstract class ShortestPathAlgorithm {
     }
 
     public double getPathActualCost() {
-        return mPathActualCost;
+        return mPathCost;
     }
 }
